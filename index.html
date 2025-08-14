@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <!-- when using the mode "code", it's important to specify charset utf-8 -->
+    <meta charset="utf-8">
+
+    <link href="./dist/jsoneditor.css" rel="stylesheet" type="text/css">
+    <script src="./dist/jsoneditor.js"></script>
+
+    <style>
+      html, body, .container {
+        margin: 0;
+        height: 100%;
+        position: relative;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+      }
+
+      .toolbox {
+        flex-shrink: 0;
+        padding: 4px 8px;
+        background: #3882face;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .toolbox span {
+        font-size: 14px;
+        color: white;
+      }
+
+      .btn {
+        display: inline-block;
+        box-sizing: border-box;
+        outline: none;
+        border: 1px solid #3883FA;
+        background: #2b78f6;
+        padding: 4px 8px;
+        color: white;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background: #0d5ddd;
+      }
+
+      #jsoneditor {
+        flex-grow: 1;
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+      <div class="toolbox">
+        <button class="btn mode-code">编辑模式</button>
+        <button class="btn mode-tree">树模式</button>
+        <span>请在编辑模式导入 JSON 代码</span>
+      </div>
+      <div id="jsoneditor" style="width: 100%; height: 100%;"></div>
+    </div>
+
+    <script>
+        // create the editor
+        const container = document.getElementById("jsoneditor")
+        const options = {
+          mode: 'code'
+        }
+        const editor = new JSONEditor(container, options)
+
+        // set json
+        const initialJson = {
+            "Array": [1, 2, 3],
+            "Boolean": true,
+            "Null": null,
+            "Number": 123,
+            "Object": {"a": "b", "c": "d"},
+            "String": "Hello World"
+        }
+        editor.set(initialJson)
+
+        // get json
+        const updatedJson = editor.get()
+
+        document.querySelector('.mode-code').addEventListener('click', () => {
+          editor.setMode('code')
+        })
+
+        document.querySelector('.mode-tree').addEventListener('click', () => {
+          editor.setMode('tree')
+        })
+    </script>
+</body>
+</html>
